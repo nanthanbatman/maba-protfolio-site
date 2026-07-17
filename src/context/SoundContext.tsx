@@ -1,6 +1,9 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+
+const BG_MUSIC_SRC = "/theme-song.mp4";
+const BG_MUSIC_VOLUME = 0.06;
 
 interface SoundContextType {
   isMuted: boolean;
@@ -15,6 +18,21 @@ const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [isMuted, setIsMuted] = useState(true);
+  const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+
+  useEffect(() => {
+    const audio = new Audio(BG_MUSIC_SRC);
+    audio.loop = true;
+    audio.volume = BG_MUSIC_VOLUME;
+    audio.preload = "auto";
+    bgMusicRef.current = audio;
+
+    return () => {
+      audio.pause();
+      audio.src = "";
+      bgMusicRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     try {
@@ -25,12 +43,34 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     } catch (e) {}
   }, []);
 
+  useEffect(() => {
+    const audio = bgMusicRef.current;
+    if (!audio) return;
+
+    if (isMuted) {
+      audio.pause();
+    } else {
+      audio.play().catch(() => {});
+    }
+  }, [isMuted]);
+
   const toggleMute = () => {
     setIsMuted((prev) => {
       const next = !prev;
       try {
         localStorage.setItem("arcade-sound-muted", String(next));
       } catch (e) {}
+
+      const audio = bgMusicRef.current;
+      if (audio) {
+        if (next) {
+          audio.pause();
+        } else {
+          audio.volume = BG_MUSIC_VOLUME;
+          audio.play().catch(() => {});
+        }
+      }
+
       return next;
     });
   };
