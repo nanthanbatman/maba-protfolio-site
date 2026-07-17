@@ -1,83 +1,113 @@
 @import "tailwindcss";
 
 @theme {
-  /* ── GTA 6 Pinkish Palette ─────────────────────────── */
-  --color-canvas:      #0f0f0f;
-  --color-panel:       #1a1a1a;
+  /* ═══════════════════════════════════════════════════
+     GTA 6 — Vice City Sunset Palette
+     Extracted from the tropical purple/pink night sky
+     ═══════════════════════════════════════════════════ */
 
-  /* Primary accent — neon coral pink */
-  --color-pink:        #FF3D6B;
-  /* Secondary — warm sunset orange-pink */
-  --color-coral:       #FF6B6B;
-  /* Tertiary — hot magenta highlight */
-  --color-magenta:     #E91E8C;
-  /* Soft rose for text accents */
-  --color-rose:        #FFB3C6;
+  /* Backgrounds */
+  --color-canvas:      rgba(14, 8, 24, 0.82);  /* deep violet-black, semi-transparent */
+  --color-panel:       rgba(22, 13, 40, 0.88);  /* dark purple panel */
+  --color-panelAlt:    rgba(30, 16, 53, 0.90);  /* slightly lighter panel */
 
-  /* Keep accent pointing to pink for utility classes */
-  --color-accent:      #FF3D6B;
-  --color-accentAlt:   #E91E8C;
+  /* Primary accent — hot magenta/fuchsia (horizon glow) */
+  --color-pink:        #E91E8C;
+  /* Secondary — bright fuchsia highlight */
+  --color-coral:       #FF3D9A;
+  /* Tertiary — electric purple */
+  --color-purple:      #9B27AF;
+  /* Violet — mid-sky colour */
+  --color-violet:      #6A1B9A;
+  /* Warm sun glow at horizon */
+  --color-sunGlow:     #FF69B4;
 
-  --color-textPrimary: #FFFFFF;
-  --color-textMuted:   #888888;
+  /* Accent aliases */
+  --color-accent:      #E91E8C;
+  --color-accentAlt:   #FF3D9A;
 
-  /* Legacy aliases so existing components don't break */
-  --color-gtaGreen:    #FF3D6B;
-  --color-gtaYellow:   #FF6B6B;
+  /* Text */
+  --color-textPrimary: #F0E6FF;   /* soft lavender-white, not pure white */
+  --color-textMuted:   #7B6A9A;   /* muted violet-grey */
 
-  --font-sans:      var(--font-inter), "Helvetica Neue", -apple-system, BlinkMacSystemFont, sans-serif;
-  --font-heading:   var(--font-montserrat), var(--font-oswald), "Impact", sans-serif;
-  --font-montserrat:var(--font-montserrat), sans-serif;
-  --font-oswald:    var(--font-oswald), sans-serif;
+  /* Legacy aliases */
+  --color-gtaGreen:    #E91E8C;
+  --color-gtaYellow:   #FF3D9A;
+
+  --font-sans:       var(--font-inter), "Helvetica Neue", -apple-system, BlinkMacSystemFont, sans-serif;
+  --font-heading:    var(--font-montserrat), var(--font-oswald), "Impact", sans-serif;
+  --font-montserrat: var(--font-montserrat), sans-serif;
+  --font-oswald:     var(--font-oswald), sans-serif;
 }
 
+/* ═══════════════════════════════════════════════════
+   BASE
+   ═══════════════════════════════════════════════════ */
 :root {
-  background-color: #0f0f0f;
-  color: #FFFFFF;
+  background-color: #0E0818;
+  color: #F0E6FF;
 }
 
 html, body {
   height: 100%;
   margin: 0;
   padding: 0;
-  cursor: none !important;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="%23FEBAFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>') 0 0, auto !important;
 }
 
 *, *::before, *::after {
-  cursor: none !important;
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 24 24"><path fill="%23FEBAFF" stroke="%23000" stroke-width="2" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>') 0 0, auto !important;
+}
+
+/* Pointer state — slightly larger for clickable elements */
+button, a, [role="button"], input, textarea, select {
+  cursor: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" width="38" height="38" viewBox="0 0 24 24"><path fill="%23FEBAFF" stroke="%23000" stroke-width="1.5" d="M5.5 3.21V20.8c0 .45.54.67.85.35l4.86-4.86a.5.5 0 0 1 .35-.15h6.87a.5.5 0 0 0 .35-.85L6.35 2.85a.5.5 0 0 0-.85.35Z"></path></svg>') 0 0, pointer !important;
 }
 
 body {
-  background-color: #0f0f0f;
+  background-color: transparent;
   color: var(--color-textPrimary);
   font-family: var(--font-sans);
 }
 
-/* =====================================================
-   GTA 6 BACKGROUND — tropical night camo pattern
-   ===================================================== */
+/* ═══════════════════════════════════════════════════
+   BACKGROUND — Vice City tropical night gradient
+   ═══════════════════════════════════════════════════ */
 .gta-bg-pattern {
-  background-color: #0f0f0f;
+  background-color: #0E0818;
   background-image:
+    /* Violet-to-magenta overlay for atmosphere */
+    radial-gradient(
+      ellipse 120% 60% at 50% 100%,
+      rgba(14, 8, 24, 0.55) 0%,
+      rgba(14, 8, 24, 0.35) 45%,
+      transparent 70%
+    ),
+    /* Subtle diagonal camo lines */
     repeating-linear-gradient(
       45deg,
-      rgba(255, 61, 107, 0.018) 0px,
-      rgba(255, 61, 107, 0.018) 1px,
+      rgba(233, 30, 140, 0.018) 0px,
+      rgba(233, 30, 140, 0.018) 1px,
       transparent 1px,
-      transparent 14px
+      transparent 16px
     ),
     repeating-linear-gradient(
       -45deg,
-      rgba(233, 30, 140, 0.012) 0px,
-      rgba(233, 30, 140, 0.012) 1px,
+      rgba(155, 39, 175, 0.012) 0px,
+      rgba(155, 39, 175, 0.012) 1px,
       transparent 1px,
-      transparent 14px
-    );
+      transparent 16px
+    ),
+    url('/backgroung.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    TYPOGRAPHY
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 .gta-heading {
   font-family: var(--font-montserrat), "Impact", sans-serif;
   font-weight: 900;
@@ -93,9 +123,24 @@ body {
   letter-spacing: 0.1em;
 }
 
-/* =====================================================
-   NAV HOVER — pink slide fill
-   ===================================================== */
+/* Apply gradient glow to any heading via background-clip trick */
+.text-gradient {
+  background: linear-gradient(
+    135deg,
+    #F0E6FF 0%,
+    #FF69B4 40%,
+    #E91E8C 70%,
+    #9B27AF 100%
+  );
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 12px rgba(233, 30, 140, 0.4));
+}
+
+/* ═══════════════════════════════════════════════════
+   NAV HOVER — magenta slide fill
+   ═══════════════════════════════════════════════════ */
 .gta-nav-item {
   position: relative;
   overflow: hidden;
@@ -107,7 +152,8 @@ body {
   content: "";
   position: absolute;
   inset: 0;
-  background: var(--color-pink);
+  /* Horizontal magenta-to-violet gradient fill */
+  background: linear-gradient(90deg, #E91E8C, #9B27AF);
   transform: translateX(-100%);
   transition: transform 0.18s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   z-index: 0;
@@ -128,11 +174,11 @@ body {
   z-index: 1;
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    STAT BAR
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 .gta-stat-bar-track {
-  background: #252525;
+  background: rgba(30, 16, 53, 0.9);
   height: 10px;
   position: relative;
   overflow: hidden;
@@ -140,9 +186,10 @@ body {
 
 .gta-stat-bar-fill {
   height: 100%;
-  background: linear-gradient(90deg, var(--color-pink), var(--color-coral));
+  background: linear-gradient(90deg, #E91E8C, #FF3D9A, #FF69B4);
   transition: width 1s cubic-bezier(0.25, 0.46, 0.45, 0.94);
   position: relative;
+  box-shadow: 0 0 10px rgba(233, 30, 140, 0.5);
 }
 
 .gta-stat-bar-fill::after {
@@ -152,18 +199,14 @@ body {
   top: 0;
   bottom: 0;
   width: 2px;
-  background: rgba(255, 255, 255, 0.6);
+  background: rgba(255, 255, 255, 0.7);
 }
 
-.gta-stat-bar-fill-alt {
-  background: linear-gradient(90deg, var(--color-magenta), var(--color-pink));
-}
-
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    BUTTONS
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 .gta-btn-primary {
-  background: var(--color-pink);
+  background: linear-gradient(135deg, #E91E8C, #9B27AF);
   color: #ffffff;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 800;
@@ -176,9 +219,9 @@ body {
 }
 
 .gta-btn-primary:hover {
-  background: var(--color-coral);
+  background: linear-gradient(135deg, #FF3D9A, #E91E8C);
   transform: translateY(-1px);
-  box-shadow: 0 4px 20px rgba(255, 61, 107, 0.45);
+  box-shadow: 0 4px 24px rgba(233, 30, 140, 0.5), 0 0 40px rgba(155, 39, 175, 0.2);
 }
 
 .gta-btn-primary:active {
@@ -187,37 +230,42 @@ body {
 
 .gta-btn-outline {
   background: transparent;
-  color: var(--color-textPrimary);
+  color: #F0E6FF;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  border: 2px solid rgba(255, 61, 107, 0.35);
+  border: 1.5px solid rgba(233, 30, 140, 0.45);
   transition: all 0.15s ease;
   cursor: pointer;
   clip-path: polygon(0 0, calc(100% - 6px) 0, 100% 6px, 100% 100%, 6px 100%, 0 calc(100% - 6px));
 }
 
 .gta-btn-outline:hover {
-  border-color: var(--color-pink);
-  color: var(--color-pink);
-  box-shadow: 0 0 16px rgba(255, 61, 107, 0.2);
+  border-color: #E91E8C;
+  color: #FF69B4;
+  box-shadow: 0 0 16px rgba(233, 30, 140, 0.3), inset 0 0 16px rgba(233, 30, 140, 0.05);
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    CARDS
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 .gta-card {
-  background: var(--color-panel);
-  border: 1px solid #282828;
+  background: rgba(22, 13, 40, 0.75);
+  border: 1px solid #2A1545;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
   position: relative;
   transition: all 0.2s ease;
 }
 
 .gta-card-hover:hover {
-  border-color: var(--color-pink);
+  border-color: #E91E8C;
   transform: scale(1.02);
-  box-shadow: 0 0 0 1px rgba(255, 61, 107, 0.25), 0 8px 32px rgba(0,0,0,0.6);
+  box-shadow:
+    0 0 0 1px rgba(233, 30, 140, 0.3),
+    0 8px 32px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(155, 39, 175, 0.1);
 }
 
 .gta-card-slash::before {
@@ -229,26 +277,28 @@ body {
   height: 0;
   border-style: solid;
   border-width: 0 28px 28px 0;
-  border-color: transparent var(--color-pink) transparent transparent;
+  border-color: transparent #E91E8C transparent transparent;
   z-index: 1;
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    INPUTS
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 .gta-input {
-  background: #0a0a0a;
-  border: 1px solid #2e2e2e;
-  color: var(--color-textPrimary);
+  background: rgba(10, 5, 21, 0.85);
+  border: 1px solid #2A1545;
+  color: #F0E6FF;
   font-family: var(--font-sans);
   outline: none;
   transition: border-color 0.15s ease, box-shadow 0.15s ease;
   width: 100%;
   padding: 12px 16px;
+  backdrop-filter: blur(4px);
+  -webkit-backdrop-filter: blur(4px);
 }
 
 .gta-input::placeholder {
-  color: #444;
+  color: #3D2460;
   font-family: var(--font-montserrat), sans-serif;
   font-weight: 600;
   text-transform: uppercase;
@@ -257,13 +307,16 @@ body {
 }
 
 .gta-input:focus {
-  border-color: var(--color-pink);
-  box-shadow: 0 0 0 1px rgba(255, 61, 107, 0.3), inset 0 0 12px rgba(255, 61, 107, 0.04);
+  border-color: #E91E8C;
+  box-shadow:
+    0 0 0 1px rgba(233, 30, 140, 0.35),
+    inset 0 0 16px rgba(233, 30, 140, 0.05),
+    0 0 20px rgba(155, 39, 175, 0.1);
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    MISSION PASSED OVERLAY
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 @keyframes mission-passed-in {
   0%   { opacity: 0; transform: scale(1.15); }
   30%  { opacity: 1; transform: scale(1.0); }
@@ -277,11 +330,11 @@ body {
   font-weight: 900;
   font-style: italic;
   text-transform: uppercase;
-  color: var(--color-pink);
-  text-shadow:
-    0 0 40px rgba(255, 61, 107, 0.7),
-    2px 2px 0px rgba(0,0,0,0.8),
-    -2px -2px 0px rgba(0,0,0,0.8);
+  background: linear-gradient(135deg, #FF69B4, #E91E8C, #9B27AF);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  filter: drop-shadow(0 0 30px rgba(233, 30, 140, 0.8));
 }
 
 @keyframes respect-in {
@@ -296,29 +349,29 @@ body {
   animation-delay: 0.3s;
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    STAR RATING — wanted level style
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 @keyframes star-pulse {
   0%, 100% { opacity: 1;   transform: scale(1); }
   50%       { opacity: 0.6; transform: scale(0.92); }
 }
 
 .star-active {
-  color: var(--color-pink);
+  color: #FF3D9A;
   animation: star-pulse 1.4s ease-in-out infinite;
   display: inline-block;
-  filter: drop-shadow(0 0 6px rgba(255, 61, 107, 0.7));
+  filter: drop-shadow(0 0 8px rgba(233, 30, 140, 0.8)) drop-shadow(0 0 2px rgba(255, 105, 180, 0.9));
 }
 
 .star-inactive {
-  color: #2e2e2e;
+  color: #1E1035;
   display: inline-block;
 }
 
-/* =====================================================
-   WANTED LEVEL STARS (sidebar telemetry)
-   ===================================================== */
+/* ═══════════════════════════════════════════════════
+   WANTED LEVEL STARS (sidebar)
+   ═══════════════════════════════════════════════════ */
 @keyframes wanted-flash {
   0%, 100% { opacity: 1; }
   50%       { opacity: 0.35; }
@@ -326,33 +379,34 @@ body {
 
 .wanted-star-active {
   animation: wanted-flash 0.8s ease-in-out infinite;
-  color: var(--color-pink);
+  color: #E91E8C;
+  filter: drop-shadow(0 0 4px rgba(233, 30, 140, 0.7));
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    SCROLLBAR
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 ::-webkit-scrollbar       { width: 4px; height: 4px; }
-::-webkit-scrollbar-track { background: #161616; }
-::-webkit-scrollbar-thumb { background: #2e2e2e; border-radius: 2px; }
-::-webkit-scrollbar-thumb:hover { background: var(--color-pink); }
+::-webkit-scrollbar-track { background: #0E0818; }
+::-webkit-scrollbar-thumb { background: #3D1F6B; border-radius: 2px; }
+::-webkit-scrollbar-thumb:hover { background: #E91E8C; }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    DIAGONAL STRIPE TEXTURE
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 .gta-stripe-bg {
   background-image: repeating-linear-gradient(
     -45deg,
     transparent,
     transparent 6px,
-    rgba(255,255,255,0.012) 6px,
-    rgba(255,255,255,0.012) 12px
+    rgba(233, 30, 140, 0.025) 6px,
+    rgba(233, 30, 140, 0.025) 12px
   );
 }
 
-/* =====================================================
+/* ═══════════════════════════════════════════════════
    ANIMATIONS
-   ===================================================== */
+   ═══════════════════════════════════════════════════ */
 @keyframes slide-up-in {
   from { opacity: 0; transform: translateY(16px); }
   to   { opacity: 1; transform: translateY(0); }
@@ -364,8 +418,3 @@ body {
   to   { width: 100%; }
 }
 .animate-scan-in { animation: scan-in 2s ease-out forwards; }
-
-/* Pink glow text */
-.text-pink-glow {
-  text-shadow: 0 0 12px rgba(255, 61, 107, 0.6), 0 0 30px rgba(255, 61, 107, 0.25);
-}

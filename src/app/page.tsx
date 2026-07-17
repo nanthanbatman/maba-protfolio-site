@@ -123,13 +123,12 @@ export default function Home() {
     <div className="w-screen h-screen overflow-hidden bg-canvas select-none gta-bg-pattern flex flex-col lg:flex-row">
 
       {/* ─── Mobile Header ──────────────────────────────── */}
-      <header className="lg:hidden w-full bg-panel border-b border-[#2c2c2c] flex flex-col shrink-0 z-40">
-        <div className="px-4 py-2 flex justify-between items-center" style={{ background: "#FF3D6B" }}>
+      <header className="lg:hidden w-full bg-panel border-b border-[#2A1545] flex flex-col shrink-0 z-40">
+        <div className="px-4 py-2 flex justify-between items-center"
+          style={{ background: "linear-gradient(90deg, #E91E8C, #9B27AF)" }}>
           <span className="gta-heading text-white text-base">ALEX VANCE</span>
-          <span
-            className="text-white/80 text-[9px] font-bold tracking-widest"
-            style={{ fontFamily: "var(--font-oswald)" }}
-          >
+          <span className="text-white/80 text-[9px] font-bold tracking-widest"
+            style={{ fontFamily: "var(--font-oswald)" }}>
             ELITE ENGINEER
           </span>
         </div>
@@ -143,8 +142,8 @@ export default function Home() {
                 onMouseEnter={playHover}
                 className={`flex-shrink-0 px-4 py-3 text-[10px] font-bold tracking-widest uppercase transition-colors duration-200 border-b-2 whitespace-nowrap ${
                   isActive
-                    ? "border-b-gtaYellow text-gtaYellow bg-[#111]"
-                    : "border-b-transparent text-textMuted hover:text-textPrimary hover:bg-[#1a1a1a]"
+                    ? "border-b-[#E91E8C] text-[#FF69B4] bg-[#160D28]"
+                    : "border-b-transparent text-textMuted hover:text-textPrimary hover:bg-[#1E1035]"
                 }`}
                 style={{ fontFamily: "var(--font-oswald)" }}
               >
@@ -156,22 +155,21 @@ export default function Home() {
       </header>
 
       {/* ─── Desktop Left Sidebar ───────────────────────── */}
-      <aside className="hidden lg:flex shrink-0 w-[280px] xl:w-[300px] h-full flex-col border-r border-[#2c2c2c] bg-panel z-30 overflow-hidden">
+      <aside className="hidden lg:flex shrink-0 w-[280px] xl:w-[300px] h-full flex-col border-r border-[#2A1545] bg-panel z-30 overflow-hidden">
         <div className="flex flex-col h-full overflow-y-auto overflow-x-hidden">
 
           {/* Brand */}
-          <div className="bg-gtaYellow px-6 py-5 shrink-0">
-            <div className="gta-heading text-canvas text-2xl leading-tight">ALEX VANCE</div>
-            <div
-              className="text-[10px] font-bold tracking-[0.2em] mt-1"
-              style={{ fontFamily: "var(--font-oswald)", color: "rgba(20,20,20,0.6)" }}
-            >
+          <div className="px-6 py-5 shrink-0"
+            style={{ background: "linear-gradient(135deg, #E91E8C 0%, #9B27AF 100%)" }}>
+            <div className="gta-heading text-white text-2xl leading-tight">
+              ALEX VANCE
+            </div>
+            <div className="text-[10px] font-bold tracking-[0.2em] mt-1"
+              style={{ fontFamily: "var(--font-oswald)", color: "rgba(255,255,255,0.75)" }}>
               ELITE FULL-STACK ENGINEER
             </div>
-            <div
-              className="text-[10px] tracking-widest mt-0.5"
-              style={{ fontFamily: "var(--font-oswald)", color: "rgba(20,20,20,0.5)" }}
-            >
+            <div className="text-[10px] tracking-widest mt-0.5"
+              style={{ fontFamily: "var(--font-oswald)", color: "rgba(255,255,255,0.5)" }}>
               PROJECT LEAD
             </div>
           </div>
@@ -189,7 +187,7 @@ export default function Home() {
                   onClick={() => scrollToSection(item.sectionId)}
                   onMouseEnter={() => { setHoveredIndex(idx); playHover(); }}
                   onMouseLeave={() => setHoveredIndex(null)}
-                  className={`gta-nav-item w-full text-left px-6 py-5 border-b border-[#2c2c2c] flex items-center justify-between outline-none cursor-pointer ${
+                  className={`gta-nav-item w-full text-left px-6 py-5 border-b border-[#2A1545] flex items-center justify-between outline-none cursor-pointer ${
                     isActive ? "active" : ""
                   }`}
                 >
@@ -198,7 +196,7 @@ export default function Home() {
                       className="text-xs font-bold w-6 transition-colors duration-150"
                       style={{
                         fontFamily: "var(--font-oswald)",
-                        color: highlighted ? "#141414" : "#333",
+                        color: highlighted ? "#ffffff" : "#3D2460",
                       }}
                     >
                       {item.id}
@@ -208,7 +206,7 @@ export default function Home() {
                         className="text-[13px] font-bold tracking-[0.15em] transition-colors duration-150"
                         style={{
                           fontFamily: "var(--font-oswald)",
-                          color: highlighted ? "#141414" : "#999",
+                          color: highlighted ? "#ffffff" : "#7B6A9A",
                         }}
                       >
                         {item.label}
@@ -217,7 +215,7 @@ export default function Home() {
                         className="text-[10px] tracking-widest mt-0.5 transition-colors duration-150"
                         style={{
                           fontFamily: "var(--font-oswald)",
-                          color: highlighted ? "rgba(20,20,20,0.6)" : "#444",
+                          color: highlighted ? "rgba(255,255,255,0.65)" : "#3D2460",
                         }}
                       >
                         {item.sublabel}
@@ -230,9 +228,9 @@ export default function Home() {
                     className="relative w-4 h-4 shrink-0 transition-opacity duration-150"
                     style={{ opacity: highlighted ? 1 : 0 }}
                   >
-                    <div style={{ position: "absolute", left: 0, right: 0, top: "50%", height: 1, background: "#141414", transform: "translateY(-50%)" }} />
-                    <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", width: 1, background: "#141414", transform: "translateX(-50%)" }} />
-                    <div style={{ position: "absolute", inset: 4, border: "1px solid #141414", borderRadius: "50%" }} />
+                    <div style={{ position: "absolute", left: 0, right: 0, top: "50%", height: 1, background: "#ffffff", transform: "translateY(-50%)" }} />
+                    <div style={{ position: "absolute", top: 0, bottom: 0, left: "50%", width: 1, background: "#ffffff", transform: "translateX(-50%)" }} />
+                    <div style={{ position: "absolute", inset: 4, border: "1px solid #ffffff", borderRadius: "50%" }} />
                   </div>
                 </button>
               );
@@ -240,15 +238,15 @@ export default function Home() {
           </nav>
 
           {/* Telemetry + keyboard hints */}
-          <div className="p-4 space-y-4 shrink-0 border-t border-[#2c2c2c]">
+          <div className="p-4 space-y-4 shrink-0 border-t border-[#2A1545]">
             <SystemTelemetry />
             <div
-              className="space-y-1.5 text-[9px] text-[#444]"
+              className="space-y-1.5 text-[9px] text-[#3D2460]"
               style={{ fontFamily: "var(--font-oswald)" }}
             >
               <div className="flex items-center gap-2">
-                <span className="border border-[#333] text-[#999] px-1.5 py-0.5 text-[9px]">W</span>
-                <span className="border border-[#333] text-[#999] px-1.5 py-0.5 text-[9px]">S</span>
+                <span className="border border-[#2A1545] text-textMuted px-1.5 py-0.5 text-[9px]">W</span>
+                <span className="border border-[#2A1545] text-textMuted px-1.5 py-0.5 text-[9px]">S</span>
                 <span>/ scroll to navigate</span>
               </div>
             </div>
@@ -281,7 +279,7 @@ export default function Home() {
         </section>
 
         {/* Divider */}
-        <div className="mx-6 md:mx-10 border-t border-[#2c2c2c]" />
+        <div className="mx-6 md:mx-10 border-t border-[#2A1545]" />
 
         <section
           id="core-tech"
@@ -300,7 +298,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="mx-6 md:mx-10 border-t border-[#2c2c2c]" />
+        <div className="mx-6 md:mx-10 border-t border-[#2A1545]" />
 
         <section
           id="projects"
@@ -319,7 +317,7 @@ export default function Home() {
           </div>
         </section>
 
-        <div className="mx-6 md:mx-10 border-t border-[#2c2c2c]" />
+        <div className="mx-6 md:mx-10 border-t border-[#2A1545]" />
 
         <section
           id="contact"
@@ -351,7 +349,7 @@ export default function Home() {
           <div
             key={idx}
             className="flex-1 transition-colors duration-300"
-            style={{ background: activeSection === item.sectionId ? "#FBC02D" : "#1a1a1a" }}
+            style={{ background: activeSection === item.sectionId ? "#E91E8C" : "#160D28" }}
           />
         ))}
       </div>

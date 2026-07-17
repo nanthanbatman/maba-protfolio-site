@@ -5,9 +5,6 @@ import { motion } from "framer-motion";
 import { useSound } from "@/context/SoundContext";
 import { ExternalLink, Github } from "lucide-react";
 
-const PINK  = "#FF3D6B";
-const CORAL = "#FF6B6B";
-
 const projects = [
   {
     id: "01", missionName: "HEIST_ALPHA", title: "NEXUS_DB",
@@ -40,12 +37,12 @@ export default function DeployedProjectsSection() {
 
   return (
     <div className="space-y-6">
-      <div className="border-b border-[#282828] pb-4">
+      <div className="border-b border-[#2A1545] pb-4">
         <div className="text-[10px] tracking-[0.2em] mb-1"
-          style={{ fontFamily: "var(--font-oswald)", color: PINK }}>
+          style={{ fontFamily: "var(--font-oswald)", color: "#E91E8C" }}>
           03 // HEISTS
         </div>
-        <h2 className="gta-heading text-3xl text-textPrimary">PROJECTS</h2>
+        <h2 className="gta-heading text-3xl text-gradient">PROJECTS</h2>
         <p className="text-textMuted text-[11px] tracking-widest mt-1"
           style={{ fontFamily: "var(--font-oswald)" }}>
           ACTIVE MISSIONS &amp; COMPLETED HEISTS
@@ -54,30 +51,33 @@ export default function DeployedProjectsSection() {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
         {projects.map((proj, idx) => (
-          <motion.div
-            key={proj.id}
+          <motion.div key={proj.id}
             initial={{ opacity: 0, y: 20 }}
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true, amount: 0.15 }}
             transition={{ duration: 0.25, delay: idx * 0.07 }}
             onMouseEnter={playHover}
-            className="relative gta-card gta-card-slash flex flex-col overflow-hidden group transition-all duration-200 hover:border-[#FF3D6B]"
+            className="relative gta-card gta-card-slash flex flex-col overflow-hidden group transition-all duration-200 hover:border-[#E91E8C]"
           >
-            <div className="px-5 pt-5 pb-4 border-b border-[#282828]" style={{ background: "#111" }}>
+            <div className="px-5 pt-5 pb-4 border-b border-[#2A1545]"
+              style={{ background: "#0E0818" }}>
               <div className="text-[9px] text-textMuted tracking-[0.3em] mb-1"
                 style={{ fontFamily: "var(--font-oswald)" }}>
                 MISSION: {proj.missionName}
               </div>
-              <h3 className="gta-heading text-xl text-textPrimary leading-none group-hover:text-[#FF3D6B] transition-colors duration-200">
+              <h3 className="gta-heading text-xl leading-none transition-all duration-200"
+                style={{ color: "#F0E6FF" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "#E91E8C")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "#F0E6FF")}>
                 {proj.title}
               </h3>
               <div className="flex flex-wrap gap-2 mt-3">
                 <span className="text-[9px] text-white px-2 py-0.5 font-bold tracking-widest"
-                  style={{ fontFamily: "var(--font-oswald)", background: PINK }}>
+                  style={{ fontFamily: "var(--font-oswald)", background: "linear-gradient(90deg,#E91E8C,#9B27AF)" }}>
                   PAYOUT: {proj.payout}
                 </span>
                 <span className="text-[9px] px-2 py-0.5 font-bold tracking-widest"
-                  style={{ fontFamily: "var(--font-oswald)", border: `1px solid ${CORAL}`, color: CORAL }}>
+                  style={{ fontFamily: "var(--font-oswald)", border: "1px solid #9B27AF", color: "#FF69B4" }}>
                   TEAM: {proj.teamRole}
                 </span>
               </div>
@@ -87,8 +87,8 @@ export default function DeployedProjectsSection() {
               <p className="text-textMuted text-sm leading-relaxed font-sans">{proj.description}</p>
               <div className="flex flex-wrap gap-1.5">
                 {proj.tags.map((tag, i) => (
-                  <span key={i} className="text-[9px] text-textMuted border border-[#2e2e2e] px-2 py-0.5 tracking-wider"
-                    style={{ fontFamily: "var(--font-oswald)" }}>
+                  <span key={i} className="text-[9px] text-textMuted px-2 py-0.5 tracking-wider"
+                    style={{ fontFamily: "var(--font-oswald)", border: "1px solid #2A1545" }}>
                     {tag}
                   </span>
                 ))}

@@ -2,7 +2,6 @@ import type { Metadata } from "next";
 import { Inter, Montserrat, Oswald } from "next/font/google";
 import "./globals.css";
 import { SoundProvider } from "@/context/SoundContext";
-import GTACursor from "@/components/GTACursor";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -40,7 +39,6 @@ export default function RootLayout({
     >
       <body className="bg-canvas text-textPrimary font-sans">
         <SoundProvider>
-          <GTACursor />
           {children}
         </SoundProvider>
       </body>
