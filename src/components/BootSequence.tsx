@@ -20,7 +20,7 @@ const bootLogs = [
 ];
 
 export default function BootSequence({ onComplete }: BootSequenceProps) {
-  const { playHover, playBootUp } = useSound();
+  const { playHover, playBootUp, startBackgroundMusic } = useSound();
   const [lines, setLines] = useState<string[]>([]);
   const [progress, setProgress] = useState(0);
   const [stage, setStage] = useState<"logging"|"loading"|"ready"|"entering">("logging");
@@ -43,7 +43,12 @@ export default function BootSequence({ onComplete }: BootSequenceProps) {
     return () => clearInterval(iv);
   }, [stage]);
 
-  const handleEnter = () => { setStage("entering"); playBootUp(); setTimeout(onComplete, 1200); };
+  const handleEnter = () => {
+    setStage("entering");
+    startBackgroundMusic();
+    playBootUp();
+    setTimeout(onComplete, 1200);
+  };
 
   return (
     <div className="fixed inset-0 z-[99999] flex items-center justify-center p-4 select-none gta-bg-pattern">

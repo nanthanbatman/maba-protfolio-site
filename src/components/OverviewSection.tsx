@@ -2,6 +2,7 @@
 
 import React from "react";
 import ProfileMatrix from "./ProfileMatrix";
+import HeistPayoutCounter from "./HeistPayoutCounter";
 import { motion } from "framer-motion";
 
 interface Skill {
@@ -111,23 +112,7 @@ export default function OverviewSection() {
         </div>
       </div>
 
-      {/* Stats strip */}
-      <div className="grid grid-cols-3 gap-3">
-        {[
-          { label: "YEARS ACTIVE",     value: "10+" },
-          { label: "PROJECTS SHIPPED", value: "40+" },
-          { label: "UPTIME RATE",      value: "99.9%" },
-        ].map((stat) => (
-          <div key={stat.label} className="gta-card p-4 text-center gta-stripe-bg"
-            style={{ borderTop: "2px solid #E91E8C" }}>
-            <div className="text-2xl font-black gta-heading text-gradient">{stat.value}</div>
-            <div className="text-[10px] text-textMuted tracking-widest mt-1"
-              style={{ fontFamily: "var(--font-oswald)" }}>
-              {stat.label}
-            </div>
-          </div>
-        ))}
-      </div>
+      <HeistPayoutCounter />
     </div>
   );
 }

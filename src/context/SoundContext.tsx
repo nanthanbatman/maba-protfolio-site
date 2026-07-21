@@ -1,13 +1,30 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect, useRef } from "react";
+import React, {
+  createContext,
+  useContext,
+  useState,
+  useEffect,
+  useRef,
+  useCallback,
+} from "react";
 
 const BG_MUSIC_SRC = "/theme-song.mp4";
 const BG_MUSIC_VOLUME = 0.06;
 
+function readMutedPreference(): boolean {
+  if (typeof window === "undefined") return false;
+  try {
+    const saved = localStorage.getItem("arcade-sound-muted");
+    if (saved !== null) return saved === "true";
+  } catch {}
+  return false;
+}
+
 interface SoundContextType {
   isMuted: boolean;
   toggleMute: () => void;
+  startBackgroundMusic: () => void;
   playHover: () => void;
   playConfirm: () => void;
   playBootUp: () => void;
@@ -17,8 +34,9 @@ interface SoundContextType {
 const SoundContext = createContext<SoundContextType | undefined>(undefined);
 
 export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [isMuted, setIsMuted] = useState(true);
+  const [isMuted, setIsMuted] = useState(readMutedPreference);
   const bgMusicRef = useRef<HTMLAudioElement | null>(null);
+  const musicStartedRef = useRef(false);
 
   useEffect(() => {
     const audio = new Audio(BG_MUSIC_SRC);
@@ -31,17 +49,22 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
       audio.pause();
       audio.src = "";
       bgMusicRef.current = null;
+      musicStartedRef.current = false;
     };
   }, []);
 
-  useEffect(() => {
-    try {
-      const saved = localStorage.getItem("arcade-sound-muted");
-      if (saved !== null) {
-        setIsMuted(saved === "true");
-      }
-    } catch (e) {}
-  }, []);
+  const startBackgroundMusic = useCallback(() => {
+    const audio = bgMusicRef.current;
+    if (!audio || isMuted) return;
+
+    audio.volume = BG_MUSIC_VOLUME;
+    audio
+      .play()
+      .then(() => {
+        musicStartedRef.current = true;
+      })
+      .catch(() => {});
+  }, [isMuted]);
 
   useEffect(() => {
     const audio = bgMusicRef.current;
@@ -49,25 +72,55 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
     if (isMuted) {
       audio.pause();
-    } else {
-      audio.play().catch(() => {});
+      musicStartedRef.current = false;
+      return;
     }
-  }, [isMuted]);
+
+    // Browsers block autoplay without a gesture — try anyway, unlock listeners handle the rest.
+    if (!musicStartedRef.current) {
+      startBackgroundMusic();
+    }
+  }, [isMuted, startBackgroundMusic]);
+
+  // First click/keypress unlocks background music when unmuted (browser autoplay policy).
+  useEffect(() => {
+    if (isMuted) return;
+
+    const unlock = () => {
+      if (!musicStartedRef.current) {
+        startBackgroundMusic();
+      }
+    };
+
+    window.addEventListener("pointerdown", unlock, { once: true, capture: true });
+    window.addEventListener("keydown", unlock, { once: true, capture: true });
+
+    return () => {
+      window.removeEventListener("pointerdown", unlock, { capture: true });
+      window.removeEventListener("keydown", unlock, { capture: true });
+    };
+  }, [isMuted, startBackgroundMusic]);
 
   const toggleMute = () => {
     setIsMuted((prev) => {
       const next = !prev;
       try {
         localStorage.setItem("arcade-sound-muted", String(next));
-      } catch (e) {}
+      } catch {}
 
       const audio = bgMusicRef.current;
       if (audio) {
         if (next) {
           audio.pause();
+          musicStartedRef.current = false;
         } else {
           audio.volume = BG_MUSIC_VOLUME;
-          audio.play().catch(() => {});
+          audio
+            .play()
+            .then(() => {
+              musicStartedRef.current = true;
+            })
+            .catch(() => {});
         }
       }
 
@@ -228,7 +281,17 @@ export const SoundProvider: React.FC<{ children: React.ReactNode }> = ({ childre
   };
 
   return (
-    <SoundContext.Provider value={{ isMuted, toggleMute, playHover, playConfirm, playBootUp, playGlitch }}>
+    <SoundContext.Provider
+      value={{
+        isMuted,
+        toggleMute,
+        startBackgroundMusic,
+        playHover,
+        playConfirm,
+        playBootUp,
+        playGlitch,
+      }}
+    >
       {children}
     </SoundContext.Provider>
   );
